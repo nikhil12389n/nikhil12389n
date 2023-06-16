@@ -1,0 +1,2029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"
+    />
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <title>Document</title>
+</head>
+<body onload="connectMetaMask();connectContract()">
+    <div>
+        <nav class="navbar navbar-expand-lg  btn btn-secondary ">
+            <div class="container-fluid">
+           
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav w-100 justify-content-between">
+					<li class="nav-item">
+					 
+            <a href="selectionpage.html"><button class="btn btn-dark">Home</button></a>
+					</li>
+					<li class="nav-item  " id="Dashboard">
+					  
+            <h2 id="adstname"></h2>
+					</li>
+					
+					<li class="nav-item " id="Notification">
+					
+           
+				  </ul>
+              </div>
+            </div>
+          </nav>
+    </div>
+    <!-- <table id="example" style="width: 100%"></table> -->
+	<div id="cards">
+
+	</div>
+    <script>
+        //  var table = $("#example").DataTable({
+    //     columns: [
+    //       { title: "RequestNo", data: "requestno" },
+
+        
+
+    //       { title: "product", data: "product" },
+    //       { title: "quantity", data: "quantity" },
+    //       { title: "date", data: "date" },
+    //       { title: "Status", data: "status" },
+    //       { title: "Acceptedby", data: "acceptedby" },
+    //     ],
+    //   });
+	 
+
+                            
+        
+        document.getElementById("adstname").innerText=localStorage.getItem("ROLENAME");
+         const connectMetaMask = async () => {
+        if (window.ethereum !== "undefined") {
+          const accounts = await ethereum.request({
+            method: "eth_requestAccounts",
+          });
+          account = accounts[0];
+          
+        }
+    };
+         const connectContract = async () => {
+         const ABI =[
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "div",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "to",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			}
+		],
+		"name": "acceptreqDDST",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string[]",
+				"name": "to",
+				"type": "string[]"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "reqfrom",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "string[]",
+				"name": "p",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "q",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string",
+				"name": "d",
+				"type": "string"
+			}
+		],
+		"name": "adstReceived",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "adstreceived",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "reqfrom",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "date",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "status",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "acceptedby",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "adstsent",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "date",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "status",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "acceptedby",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "ddstReceived",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "reqfrom",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "date",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "status",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "acceptedby",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "div",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "to",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			}
+		],
+		"name": "declinereqDDST",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "dgstreceived",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "reqfrom",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "date",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "status",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "acceptedby",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "div",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "string[]",
+				"name": "p",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "q",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string",
+				"name": "d",
+				"type": "string"
+			}
+		],
+		"name": "fillform",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "unit",
+				"type": "string"
+			}
+		],
+		"name": "getAllreqreceive",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "reqfrom",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "from",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "reqno",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string[]",
+						"name": "products",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "quantities",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "status",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "acceptedby",
+						"type": "string"
+					}
+				],
+				"internalType": "struct SCM.ReceivedReqforOthers[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "unit",
+				"type": "string"
+			}
+		],
+		"name": "getAllreqsent",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "reqno",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "from",
+						"type": "string"
+					},
+					{
+						"internalType": "string[]",
+						"name": "products",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "quantities",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "status",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "acceptedby",
+						"type": "string"
+					}
+				],
+				"internalType": "struct SCM.ADSTSEND[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "div",
+				"type": "string"
+			}
+		],
+		"name": "getallreqreceivedddst",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "reqfrom",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "from",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "reqno",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string[]",
+						"name": "products",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "quantities",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "status",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "acceptedby",
+						"type": "string"
+					}
+				],
+				"internalType": "struct SCM.ReceivedReqforOthers[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			}
+		],
+		"name": "getrequestcount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "manufreceived",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "reqfrom",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "date",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "status",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "acceptedby",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "requestcount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			}
+		],
+		"name": "track",
+		"outputs": [
+			{
+				"internalType": "string[]",
+				"name": "",
+				"type": "string[]"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "trackorder",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+		 const Address="0x0bC9deAc1587c634798855DcBb2FD3BD99C6D8d2";
+
+		const ABI2=[
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "acc",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string[]",
+				"name": "p",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "q",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string",
+				"name": "d",
+				"type": "string"
+			}
+		],
+		"name": "acceptdgst",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "acc",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "rej",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string[]",
+				"name": "p",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "q",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string",
+				"name": "d",
+				"type": "string"
+			}
+		],
+		"name": "acceptreqDDST1",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "adstreceived",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "reqfrom",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "date",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "status",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "acceptedby",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "div",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "unit1",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "unit2",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "reqfrom",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string[]",
+				"name": "p",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "q",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string",
+				"name": "d",
+				"type": "string"
+			}
+		],
+		"name": "adstsReceiveALL",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "adstsent",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "date",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "status",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "acceptedby",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "ddstReceived",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "reqfrom",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "date",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "status",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "acceptedby",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "div",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string[]",
+				"name": "p",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "q",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string",
+				"name": "d",
+				"type": "string"
+			}
+		],
+		"name": "ddstsReceive",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "rej",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "check",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			}
+		],
+		"name": "declinereqDDST1",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "reqfrom",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "string[]",
+				"name": "p",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "q",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string",
+				"name": "d",
+				"type": "string"
+			}
+		],
+		"name": "dgstReceived",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "dgstgetALL",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "reqfrom",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "from",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "reqno",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string[]",
+						"name": "products",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "quantities",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "status",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "acceptedby",
+						"type": "string"
+					}
+				],
+				"internalType": "struct SCM.ReceivedReqforOthers[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "dgstreceived",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "reqfrom",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "date",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "status",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "acceptedby",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "unit",
+				"type": "string"
+			}
+		],
+		"name": "getalladsts",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "reqfrom",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "from",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "reqno",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string[]",
+						"name": "products",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "quantities",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "status",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "acceptedby",
+						"type": "string"
+					}
+				],
+				"internalType": "struct SCM.ReceivedReqforOthers[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "div",
+				"type": "string"
+			}
+		],
+		"name": "getallreqreceivedddst",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "reqfrom",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "from",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "reqno",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string[]",
+						"name": "products",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "quantities",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "status",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "acceptedby",
+						"type": "string"
+					}
+				],
+				"internalType": "struct SCM.ReceivedReqforOthers[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "unit",
+				"type": "string"
+			}
+		],
+		"name": "getallreqsend",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "reqno",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "from",
+						"type": "string"
+					},
+					{
+						"internalType": "string[]",
+						"name": "products",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "quantities",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "status",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "acceptedby",
+						"type": "string"
+					}
+				],
+				"internalType": "struct SCM.ADSTSEND[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "manufreceived",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "reqfrom",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "date",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "status",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "acceptedby",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			}
+		],
+		"name": "track",
+		"outputs": [
+			{
+				"internalType": "string[]",
+				"name": "",
+				"type": "string[]"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "trackorder",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+
+
+const Address2="0x0F12A0C9A3be246920008d5CaB5Ad553cf135AC0";
+
+
+
+const ABI3=[
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "string[]",
+				"name": "p",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "q",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string",
+				"name": "d",
+				"type": "string"
+			}
+		],
+		"name": "ManufReceived",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "ManufturerReceived",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "reqfrom",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "date",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "status",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "acceptedby",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "acc",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			}
+		],
+		"name": "acceptmanufact",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "adstsent",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "date",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "status",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "acceptedby",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "dgstreceived",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "reqfrom",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "date",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "status",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "acceptedby",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			}
+		],
+		"name": "getAllAdstSend",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "reqno",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "from",
+						"type": "string"
+					},
+					{
+						"internalType": "string[]",
+						"name": "products",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "quantities",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "status",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "acceptedby",
+						"type": "string"
+					}
+				],
+				"internalType": "struct SCM.ADSTSEND[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getAllManufacturer",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "reqfrom",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "from",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "reqno",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string[]",
+						"name": "products",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "quantities",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "status",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "acceptedby",
+						"type": "string"
+					}
+				],
+				"internalType": "struct SCM.ReceivedReqforOthers[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getalldgsts",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "reqfrom",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "from",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "reqno",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string[]",
+						"name": "products",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "quantities",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string",
+						"name": "date",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "status",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "acceptedby",
+						"type": "string"
+					}
+				],
+				"internalType": "struct SCM.ReceivedReqforOthers[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reqno",
+				"type": "uint256"
+			}
+		],
+		"name": "track",
+		"outputs": [
+			{
+				"internalType": "string[]",
+				"name": "",
+				"type": "string[]"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "trackorder",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+
+
+const Address3="0x71610814E946dD75eD733a84d578755e11CABCF1";
+        window.web3 = await new Web3(window.ethereum);
+        window.contract = await new window.web3.eth.Contract(ABI, Address);
+		window.contract1 = await new window.web3.eth.Contract(ABI2, Address2);
+		window.contract2 = await new window.web3.eth.Contract(ABI3, Address3);
+        const res=await window.contract.methods.getAllreqsent(document.getElementById("adstname").innerText).call();
+		let div=document.createElement("div");
+		const res2=await window.contract1.methods.getallreqsend(document.getElementById("adstname").innerText).call();
+		const res3=await window.contract2.methods.getAllAdstSend(document.getElementById("adstname").innerText).call();
+		for(let i=0;i<res.length;i++){
+			for(let j=0;j<res2.length;j++){
+				// console.log(res2[j]);
+				if(res2[j].reqno==res[i].reqno && res2[j].from==res[i].from){
+					res[i]=res2[j];
+				}
+
+				}
+			}
+		
+		for(let i=0;i<res.length;i++){
+			for(let j=0;j<res3.length;j++){
+				console.log(res2[j]);
+				if(res3[j].reqno==res[i].reqno && res3[j].from==res[i].from){
+					res[i]=res3[j];
+				}
+				}
+			}
+        // console.log(res,res2);
+		let resultf=[];
+		let cards=document.getElementById("cards");
+        for(let i=res.length-1;i>=0;i--){
+			let result=[];
+			const ref1=await window.contract.methods.track(res[i].from,res[i].reqno).call();
+			for(let j=0;j<ref1.length;j++){
+				result.push(ref1[j]);
+			}
+			const ref2=await window.contract1.methods.track(res[i].from,res[i].reqno).call();
+			for(let k=0;k<ref2.length;k++){
+				result.push(ref2[k]);
+			}
+			
+			const ref3=await window.contract2.methods.track(res[i].from,res[i].reqno).call();
+			for(let f=0;f<ref3.length;f++){
+				result.push(ref3[f]);
+			}
+			resultf.push(result);
+			
+			let div = document.createElement("div");
+		
+		let heading = document.createElement("h2");
+		let cardbody = document.createElement("div");
+		cardbody.className = "card-body";
+		div.className = "card";
+		heading.className = "card-header";
+		heading.innerHTML = "RequestNo" + res[i].reqno;
+
+		let products = document.createElement("h4");
+		products.innerText = "Products";
+		products.className = "d-inline";
+
+let quantities = document.createElement("h4");
+quantities.innerText = "Quantities";
+quantities.className = "d-inline";
+
+let acceptedby = document.createElement("h4");
+acceptedby.innerText = "Acceptedby";
+acceptedby.className = "d-inline";
+
+let status = document.createElement("h4");
+status.innerText = "Status";
+status.className = "d-inline";
+let Date = document.createElement("h4");
+Date.innerText = "Date";
+Date.className = "d-inline";
+
+let productData = document.createElement("div");
+productData.innerText = res[i].products.join(", ");
+productData.className = "product-data";
+
+let quantityData = document.createElement("div");
+quantityData.innerText = res[i].quantities.join(", ");
+quantityData.className = "quantity-data";
+
+let acceptedByData = document.createElement("div");
+acceptedByData.innerText = res[i].acceptedby;
+acceptedByData.className = "acceptedby-data";
+
+let statusData = document.createElement("div");
+statusData.innerText = res[i].status;
+statusData.className = "status-data";
+let Datedata = document.createElement("div");
+Datedata.innerText = res[i].date;
+Datedata.className = "status-data";
+
+cardbody.appendChild(products);
+cardbody.appendChild(productData);
+cardbody.appendChild(quantities);
+cardbody.appendChild(quantityData);
+cardbody.appendChild(Date);
+cardbody.appendChild(Datedata);
+cardbody.appendChild(status);
+cardbody.appendChild(statusData);
+cardbody.appendChild(acceptedby);
+cardbody.appendChild(acceptedByData);
+
+
+
+div.appendChild(heading);
+div.appendChild(cardbody);
+cards.appendChild(div);
+
+			
+
+
+
+
+            
+			// table.row.add({'requestno':res[i].reqno,'product':res[i].products,'quantity':res[i].quantities,'date':res[i].date,'status':res[i].status,'acceptedby':res[i].acceptedby}).draw();
+			
+		}
+		for(let i=0;i<resultf.length;i++){
+			for(let j=0;j<resultf[i].length-1;j++){
+				if(resultf[i][j]==resultf[i][j+1]){
+				resultf[i][j+1]="";
+			}
+			}
+		}
+		console.log(resultf);
+	}
+	
+
+	
+
+    </script>
+    
+</body>
+</html>
+
+
