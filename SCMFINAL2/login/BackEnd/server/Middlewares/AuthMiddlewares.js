@@ -3,26 +3,23 @@ const User=require('../Models/UserModel.js');
 
 const jwt=require("jsonwebtoken");
 
-
-
-module.exports.checkUser=(req,res,next)=> {
+module.exports.checkUser=(req,res)=> {
     const token=req.cookies.jwt;
+   
+    // console.log(token);
     if(token){
-        jwt.verify(token,"Nikhil",async(err,decodedToken)=>{
-            if(err){
-                res.json({status:false});
-            }
-            else{
+        try{
+            const decode = jwt.verify(token,"Nikhil");
+            console.log(decode,"hi");
+            res.status(200).json({data:decode});
 
-                const user=await User.findById(decodedToken.id);
-                if(user) res.json({status:true,user:user.email});
-                else res.json({status:false});
-                next();
-            }
-        })
-
+        }catch(err){
+            console.log(err);
+            res.status(200).json({status :"false"})
+        }
     }
     else{
+       console.log("not");
         res.json({status:false});
         next();
     }

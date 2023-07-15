@@ -21,7 +21,7 @@ mongoose.connect(process.env.REACT_APP_Mongo,
     console.log("DB connection successfully done!");
 }).catch((err=>{
     console.log(err.message);
-}))
+}));
 app.use(cors({
     origin:["http://localhost:3000"],
     method:["GET","POST"],
