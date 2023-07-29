@@ -6,7 +6,6 @@ const TrackOrderModel = require('../Models//TrackOrderModel');
 const nodemailer = require('nodemailer');
 const maxAge = 3 * 24 * 60 * 60;
 
-
 const handleErrors = (err) => {
     let errors = { email: "", password: "" };
     if (err.message == "Incorrect Email") {
@@ -37,7 +36,7 @@ module.exports.register = async (req, res, next) => {
         const emailExists = await UserModel.exists({ email });
         const roleExists = await UserModel.exists({ role });
 
-        if (!emailExists && !roleExists) {
+        
             const user = await UserModel.create({ role, email, password });
             const token = jwt.sign({ role, email }, "Nikhil", {
                 expiresIn: maxAge,
@@ -48,21 +47,14 @@ module.exports.register = async (req, res, next) => {
                 httpOnly: false,
                 maxAge: maxAge * 1000,
             });
-
-
-
-
-
-
-            res.status(201).json({ user: user._id, created: true });
-        } else {
-            res.status(400).json({ created: false, message: "Email or role already exists" });
-        }
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-};
+            res.json({created:true});
+        
+}
+catch (err) {
+    const errors=handleErrors(err);
+    res.json({ errors, created: false });
+}
+}
 
 module.exports.login = async (req, res, next) => {
     try {
@@ -179,11 +171,13 @@ module.exports.postTrackOrder = async (req, res, next) => {
 };
 
 module.exports.getTrackorders = async (req, res, next) => {
+    
     try {
         const user = req.query.user;
         console.log(user);
         const trackorder = await TrackOrderModel.findOne({ adstname: user });
-        console.log(trackorder);
+       
+        console.log(trackorder,"hi");
         res.status(200).json({ trackorder });
     }
     catch (err) {
@@ -193,8 +187,6 @@ module.exports.getTrackorders = async (req, res, next) => {
     }
 }
 
-
-
 module.exports.register1 = async (req, res, next) => {
     try {
         const { role, email, password } = req.body;
@@ -202,46 +194,59 @@ module.exports.register1 = async (req, res, next) => {
         const roleExists = await UserModel.exists({ role });
         console.log("this is register1");
 
+        const user = await UserModel.create({ role, email, password });
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
 
 
-        if (!emailExists && !roleExists) {
-            const user = await UserModel.create({ role, email, password });
-            const transporter = nodemailer.createTransport({
-                service: "gmail",
+            auth: {
+                user: "nikhilbhukya198@gmail.com",
+                pass: "bgzsnmsccjcdyjjk",
+            },
+
+        });
 
 
-                auth: {
-                    user: "nikhilbhukya198@gmail.com",
-                    pass: "bgzsnmsccjcdyjjk",
-                },
+        const mailOptions = {
+            from: "nikhilbhukya198@gmail.com",
+            to: email,
+            subject: `Congratulations! You were added by ASC as ${role}`,
+            text: `Your role is: ${role} and your password is ${password}. Do not share it with anyone!`,
+        };
 
-            });
-
-
-            const mailOptions = {
-                from: "nikhilbhukya198@gmail.com",
-                to: email,
-                subject: `Congratulations! You were added by ASC as ${role}`,
-                text: `Your role is: ${role} and your password is ${password}. Do not share it with anyone!`,
-            };
-
-            transporter.sendMail(mailOptions, function (err, info) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log("Email Sent Successfully!");
-                }
-            });
-            res.status(200).json({ role: role, created: true });
-            
-
-        }
-        else {
-            res.status(400).json({ created: false, message: "Email or role already exists" });
-        }
+        transporter.sendMail(mailOptions, function (err, info) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("Email Sent Successfully!");
+            }
+        });
+        res.status(200).json({ role: role, created: true });
     }
     catch (err) {
+        const errors = handleErrors(err);
+        res.json({ errors, created: false });
+    }
+}
+
+
+
+
+
+module.exports.deleteRole=async(req,res,next)=>{
+    try{
+        const role=req.body.role;
+
+        const deleterole=await UserModel.deleteOne({role});
+        console.log(deleterole);
+
+
+        res.json({deleted:true});
+
+    }
+    catch(err){
         console.log(err);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.json({deleted:false});
+
     }
 }
