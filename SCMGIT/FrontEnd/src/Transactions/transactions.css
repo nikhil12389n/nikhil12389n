@@ -1,0 +1,18 @@
+.trans-cont{
+    margin-bottom: 90vh;
+    
+}
+.trans-card-box{
+    transition: all 0.2s;
+}
+.trans-card-box:hover{
+    transform: scale(1.1);
+
+}
+#exampleModal1{
+    width: 800px;
+    margin-left: 350px;
+}
+.modal1-body{
+    background-color: rgb(237, 243, 243);
+}

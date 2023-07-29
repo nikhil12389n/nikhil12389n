@@ -1,0 +1,21 @@
+.statusofreceived-cont{
+    margin-bottom: 90vh;
+    margin-top: 6vh;
+    
+}
+.card-statusofrec{
+    transition: all 0.2s;
+    width: 80%;
+}
+.card-statusofrec:hover{
+    transform: scale(1.1);
+}
+.item-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .item {
+    flex: 0 0 calc(33.33% - 10px);
+    margin: 5px; 
+  }

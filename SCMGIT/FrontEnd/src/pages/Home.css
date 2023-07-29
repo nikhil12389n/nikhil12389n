@@ -1,0 +1,6 @@
+.aboutus-img{
+    transition:all 0.2s;
+}
+.aboutus-img:hover{
+    transform: scale(1.1);
+}

@@ -1,0 +1,95 @@
+.track-cont {
+  margin-bottom: 90vh;
+ 
+}
+
+.card-contTrack{
+  transition: all 0.2s;
+
+}
+.card-contTrack:hover{
+  transform: scale(1.1);
+}
+#trackModal .modal-dialog {
+  max-width: 89%;
+  margin: 0;
+  transform: translateX(0);
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
+#trackModal .modal-content {
+  min-height: 50vh;
+  border-radius: 0;
+}
+
+
+#trackModal .modal-body {
+  padding: 20px;
+}
+
+#trackModal .modal-dialog .modal-content .modal-header,
+#trackModal .modal-dialog .modal-content .modal-footer {
+  padding: 10px;
+}
+
+#progressbar {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+#progressbar li {
+  flex-grow: 1;
+  position: relative;
+  font-weight: 400;
+  text-align: center;
+  padding: 10px;
+}
+
+#progressbar li::before {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  display: block;
+  font-size: 20px;
+  background-color: rgb(43, 226, 58);
+  border-radius: 50%;
+  margin: auto;
+  content: counter(name);
+  counter-increment: step;
+  color: white;
+}
+
+#progressbar li::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: -50%;
+  width: calc(100% + 50%);
+  height: 2px;
+  background-color: rgb(43, 226, 52);
+  z-index: -1;
+}
+
+#progressbar li:not(:last-child)::after {
+  left: 50%;
+  width: calc(100% - 50%);
+}
+
+#progressbar .step::before {
+  font-family: FontAwesome;
+  content: '\f00c';
+  color: green;
+}
+
+#progressbar .inactive-step::before {
+  background-color: lightgray;
+}
+
+#progressbar .inactive-step::after {
+  background-color: lightgray;
+}
+
+
